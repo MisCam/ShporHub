@@ -35,7 +35,7 @@ const Registration = (props : LoginProps): React.ReactElement => {
     const loginInput : string = login!.current!.value;
     const hash : string = md5(`${loginInput}${password!.current!.value}`);
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group=${group!.current!.value}&course=${course!.current!.value}&name=${name!.current!.value}`
+      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group_id=${group!.current!.value}&course=${course!.current!.value}&name=${name!.current!.value}`
     );
     const result = await answer.json();
     return result;
