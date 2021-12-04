@@ -1,0 +1,19 @@
+.title {
+    font-size: 20px;
+    color: #00dab2;
+    margin-bottom: 30px;
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.standartSelect {
+    font-size: 20px;
+    padding: 10px 40px;
+    background-color: #474747;
+    border-radius: 8px;
+    color: #141414;
+    cursor: pointer;
+}

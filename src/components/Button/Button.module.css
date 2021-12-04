@@ -1,0 +1,33 @@
+button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    font-size: 17px;
+    border-radius: 4px;
+    color: #141414;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+.gray {
+    background-color: #474747;
+}
+
+.blue {
+    background-color: #00dab2;
+    transition: 0s;
+    box-shadow: 0 0 60px #00dab2;
+}
+  
+.gray:hover{
+    background-color: #00dab2;
+    transition: 0s;
+    box-shadow: 0 0 60px #00dab2;
+}
+
+.normal_size {
+    width: 210px;
+}
+
