@@ -25,6 +25,7 @@ const Registration = (props : LoginProps): React.ReactElement => {
   const { callbackRegistration, callbackBack, groups } = props;
   const login: React.Ref<HTMLInputElement> = React.createRef();
   const password: React.Ref<HTMLInputElement> = React.createRef();
+  const name: React.Ref<HTMLInputElement> = React.createRef();
   const course: React.Ref<HTMLSelectElement> = React.createRef();
   const group: React.Ref<HTMLSelectElement> = React.createRef();
   const [isDataValid, setData] = useState("");
@@ -34,7 +35,7 @@ const Registration = (props : LoginProps): React.ReactElement => {
     const loginInput : string = login!.current!.value;
     const hash : string = md5(`${loginInput}${password!.current!.value}`);
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group=${group!.current!.value}&course=${course!.current!.value}`
+      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group=${group!.current!.value}&course=${course!.current!.value}&name=${name!.current!.value}`
     );
     const result = await answer.json();
     return result;
@@ -96,6 +97,12 @@ const Registration = (props : LoginProps): React.ReactElement => {
           onChange={() => ChangeInput(password!.current!.value)}
           className={cn(styles.input, isDataValid)}
           placeholder="Пароль(> 6 символов)"
+        />
+        <input
+          ref={name}
+          onChange={() => ChangeInput(name!.current!.value)}
+          className={cn(styles.input, isDataValid)}
+          placeholder="Имя (нас заставили)"
         />
         <div className={styles.selectors}>
           <select className={styles.select} ref={course}>
