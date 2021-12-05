@@ -1,5 +1,4 @@
 import React from "react";
-import cn from "clsx";
 
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";

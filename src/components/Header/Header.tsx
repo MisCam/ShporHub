@@ -4,7 +4,6 @@ import styles from "./Header.module.css";
 
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
-import Pages from "../App/App";
 
 type HeaderProps = {
   isLogged: boolean;

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 
 import cn from "clsx";
 
@@ -44,7 +44,7 @@ const Registration = (props : LoginProps): React.ReactElement => {
     if(!checkValidInput()) return;
     const response = await RegisterQuery();
     if(response.result === 'error') return;
-    if (response.data.access) {
+    if (response.data) {
       callbackRegistration();
     } else {
       setData(DataInput.Wrong);

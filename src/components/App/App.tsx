@@ -31,13 +31,14 @@ function App() {
   const [groups, setGroups] = useState([]);
   const [page, setPage] = useState("WelcomePage");
 
-  const Login = (nickname: string, actualToken: string) => {
+  const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
     setNickname(nickname);
     setToken(actualToken);
     setPage(Pages.MainPage);
     setLogged(true);
     SetLessonsInState();
-    GetProfile();
+    setGroup(group_id);
+    setCourse(course_id);
   };
 
   const GetLessonsResponce = async function () {
@@ -52,21 +53,6 @@ function App() {
       setLessons(value);
     });
   };
-  const GetProfileResponse = async function () {
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getProfile&token=${token}`
-    );
-    const result = await answer.json();
-    return result;
-  };
-  const GetProfile = async function () {
-    let response = await GetProfileResponse();
-    if (response.data) {
-      setCourse(response.data.course);
-      setGroup(response.data.group);
-    }
-  };
-
   const GroupsQuery = async function () {
     const answer = await fetch(
       `http://shporhub/api/index.php/?method=getGroups`
@@ -104,8 +90,8 @@ function App() {
       ) : page === Pages.Login ? (
         <LoginPage
           callbackBack={() => setPage(Pages.WelcomePage)}
-          callbackLogin={(nickname: string, token: string) =>
-            Login(nickname, token)
+          callbackLogin={(nickname: string, token: string, group_id : number, course_id : number) =>
+            Login(nickname, token, group_id, course_id)
           }
         />
       ) : page === Pages.Registration ? (
@@ -130,6 +116,7 @@ function App() {
           nickname={nickName}
           groups={groups}
           group={group}
+          token={token}
           course={course}
           setGroup={setGroup}
           setCourse={setCourse}

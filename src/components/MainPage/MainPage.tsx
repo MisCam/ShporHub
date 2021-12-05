@@ -5,8 +5,6 @@ import PageTitle from "../PageTitle";
 import Post from "../Post";
 import Menu from "./Menu";
 
-import styles from "./MainPage.module.css";
-
 type MainPageProps = {
   callbackShpor: () => void;
   lessons: {name : string}[];

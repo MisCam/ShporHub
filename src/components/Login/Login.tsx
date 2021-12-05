@@ -9,7 +9,7 @@ import styles from "./Login.module.css";
 
 type LoginProps = {
   callbackBack: () => void;
-  callbackLogin: (nickname: string, token: string) => void;
+  callbackLogin: (nickname: string, token: string, group_id : number, course_id : number) => void;
 };
 
 const DataInput = {
@@ -29,19 +29,19 @@ const Login = (props: LoginProps): React.ReactElement => {
     const rand: number = Math.floor(Math.random() * 1000000);
     const loginInput: string = login!.current!.value;
     const passwordInput: string = password!.current!.value;
-    const token: string = md5(md5(`${loginInput}${passwordInput}`) + rand);
+    const hash: string = md5(md5(`${loginInput}${passwordInput}`) + rand);
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=login&hash=${token}&rand=${rand}&login=${loginInput}`
+      `http://shporhub/api/index.php/?method=login&hash=${hash}&rand=${rand}&login=${loginInput}`
     );
     const result = await answer.json();
     return result;
   };
 
-  const Login = () => {
+  const LoginFunc = () => {
     Response().then((value) => {
-      setData(DataInput.Active);    
+      setData(DataInput.Active);
       if (value.result === "ok") {
-        callbackLogin(login!.current!.value, value.data.token);
+        callbackLogin(login!.current!.value, value.data.token, value.data.group, value.data.course);
       } else {
         setData(DataInput.Wrong);
       }
@@ -76,7 +76,7 @@ const Login = (props: LoginProps): React.ReactElement => {
           classNames={styles.marginTop}
           color={BUTTON_COLOR.gray}
           size={BUTTON_SIZE.normal}
-          callback={Login}
+          callback={LoginFunc}
         >
           Войти
         </Button>

@@ -3,7 +3,6 @@ import React from "react";
 import PageLayout from "../PageLayout";
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
-import cn from "clsx";
 
 import styles from "./Profile.module.css";
 
@@ -12,6 +11,7 @@ type ProfileProps = {
   course: number;
   group: number;
   groups: Group[];
+  token: string;
   setGroup: (groupId: number) => void;
   setCourse: (courseId: number) => void;
 };
@@ -20,7 +20,7 @@ type Group = {
   name: string;
 };
 const Profile = (props: ProfileProps): React.ReactElement => {
-  const { nickname, course, group, groups, setGroup, setCourse } = props;
+  const { nickname, course, group, token, groups, setGroup, setCourse } = props;
   let courseSelect = course;
   let groupSelect = group;
   const ChangeCourse = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const Profile = (props: ProfileProps): React.ReactElement => {
   };
   const ChangeInfo = async function () {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=updateProfile&course=${courseSelect}&group=${groupSelect}`
+      `http://shporhub/api/index.php/?method=updateProfile&course=${courseSelect}&group=${groupSelect}&token=${token}`
     );
     const response = await answer.json();
     if (response.data) {
