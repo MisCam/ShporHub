@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import cn from "clsx";
 
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 
+import { PAGES } from "../App/pages";
+
 import styles from "./Login.module.css";
 
 type LoginProps = {
-  callbackBack: () => void;
+  callbackSetPage: (page : string, logout? : boolean) => void;
   callbackLogin: (nickname: string, token: string, group_id : number, course_id : number) => void;
 };
 
@@ -19,7 +21,7 @@ const DataInput = {
 };
 
 const Login = (props: LoginProps): React.ReactElement => {
-  const { callbackLogin, callbackBack } = props;
+  const { callbackLogin, callbackSetPage } = props;
   const login: React.Ref<HTMLInputElement> = React.createRef();
   const password: React.Ref<HTMLInputElement> = React.createRef();
   const [isDataValid, setData] = useState("");
@@ -81,12 +83,23 @@ const Login = (props: LoginProps): React.ReactElement => {
           Войти
         </Button>
         <Button
-          callback={callbackBack}
+          callback={() => callbackSetPage(PAGES.WelcomePage)}
           classNames={styles.marginTop}
           color={BUTTON_COLOR.gray}
           size={BUTTON_SIZE.normal}
         >
           Назад в меню
+        </Button>
+        <Button
+          callback={() => {
+            login!.current!.value = 'elprimo';
+            password!.current!.value = '123456';
+          }}
+          classNames={styles.marginTop}
+          color={BUTTON_COLOR.gray}
+          size={BUTTON_SIZE.normal}
+        >
+          Заполнить як elprimo
         </Button>
       </div>
     </div>

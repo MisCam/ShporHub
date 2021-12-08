@@ -4,12 +4,12 @@ import cn from "clsx";
 
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
+import { PAGES } from "../App/pages";
 
 import styles from "./Registration.module.css";
 
 type LoginProps = {
-    callbackBack: () => void;
-    callbackRegistration: () => void;
+    callbackSetPage: (page : string, logout? : boolean) => void;
     groups: Group[];
 }
 type Group = {
@@ -22,7 +22,7 @@ const DataInput = {
   NotActive: "",
 };
 const Registration = (props : LoginProps): React.ReactElement => {
-  const { callbackRegistration, callbackBack, groups } = props;
+  const { callbackSetPage, groups } = props;
   const login: React.Ref<HTMLInputElement> = React.createRef();
   const password: React.Ref<HTMLInputElement> = React.createRef();
   const name: React.Ref<HTMLInputElement> = React.createRef();
@@ -45,7 +45,7 @@ const Registration = (props : LoginProps): React.ReactElement => {
     const response = await RegisterQuery();
     if(response.result === 'error') return;
     if (response.data) {
-      callbackRegistration();
+      callbackSetPage(PAGES.Registration);
     } else {
       setData(DataInput.Wrong);
     }
@@ -130,7 +130,7 @@ const Registration = (props : LoginProps): React.ReactElement => {
           Зарегистрироваться
         </Button>
         <Button
-          callback={callbackBack}
+          callback={() => callbackSetPage(PAGES.WelcomePage)}
           classNames={styles.marginTop}
           color={BUTTON_COLOR.gray}
           size={BUTTON_SIZE.normal}

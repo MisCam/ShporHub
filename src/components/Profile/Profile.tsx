@@ -23,11 +23,11 @@ const Profile = (props: ProfileProps): React.ReactElement => {
   const { nickname, course, group, token, groups, setGroup, setCourse } = props;
   let courseSelect = course;
   let groupSelect = group;
-  const ChangeCourse = (event: React.ChangeEvent<HTMLInputElement>) => {
-    courseSelect = -event.target.value;
-  };
-  const ChangeGroup = (event: React.ChangeEvent<HTMLInputElement>) => {
-    groupSelect = -event.target.value;
+  const ChangeCourse = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    courseSelect = parseInt(event.target.value);
+  }
+  const ChangeGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    groupSelect = parseInt(event.target.value);
   };
   const ChangeInfo = async function () {
     const answer = await fetch(
@@ -67,7 +67,7 @@ const Profile = (props: ProfileProps): React.ReactElement => {
           Направление
           <select
             className={styles.standartSelect}
-            onChange={() => ChangeGroup}
+            onChange={ChangeGroup}
           >
             {groups.map((value) => (
               <option

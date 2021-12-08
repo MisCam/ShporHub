@@ -5,14 +5,16 @@ import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 
 import TestImg from '../../assets/test.jpg';
 
+import { PAGES } from "../App/pages";
+
 import styles from "./Post.module.css";
 
 type PostProps = {
-  callbackShpor: () => void;
+  callbackSetPage: (page : string, logout? : boolean) => void;
 };
 
 const Post = (props : PostProps): React.ReactElement => {
-  const { callbackShpor } = props;
+  const { callbackSetPage } = props;
   return (
     <div className={styles.post}>
       <label>Время проведения: 13.09.2019</label>
@@ -24,7 +26,7 @@ const Post = (props : PostProps): React.ReactElement => {
       <div className={styles.image}>
         <img src={TestImg} alt="post_img"></img>
       </div>
-      <Button callback={callbackShpor} classNames={styles.button} size={BUTTON_SIZE.content} color={BUTTON_COLOR.gray}>
+      <Button callback={() => callbackSetPage(PAGES.Shpor)} classNames={styles.button} size={BUTTON_SIZE.content} color={BUTTON_COLOR.gray}>
         Посмотреть ответы
       </Button>
     </div>

@@ -4,34 +4,32 @@ import styles from "./Header.module.css";
 
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
+import { PAGES } from "../App/pages";
 
 type HeaderProps = {
   isLogged: boolean;
   nick: string;
-  callbackLogin: () => void;
-  callbackRegistration: () => void;
-  callbackLogout: () => void;
-  callbackProfile: () => void;
+  callbackSetPage: (page: string, logout?: boolean) => void;
 };
 
 const Header = (props: HeaderProps): React.ReactElement => {
-  const {
-    callbackLogin,
-    callbackRegistration,
-    callbackLogout,
-    callbackProfile,
-  } = props;
-  
+  const { callbackSetPage } = props;
+
   return (
     <header>
-      <div className={styles.logo}>
+      <div
+        className={styles.logo}
+        onClick={() =>
+          callbackSetPage(props.isLogged ? PAGES.MainPage : PAGES.WelcomePage)
+        }
+      >
         Shpor<span>Hub</span>
       </div>
       {props.isLogged ? (
         <div className={styles.buttons}>
           <label className={styles.nickname}>{props.nick}</label>
           <Button
-            callback={callbackLogout}
+            callback={() => callbackSetPage(PAGES.WelcomePage, true)}
             classNames={styles.mar_horiz}
             color={BUTTON_COLOR.gray}
             size={BUTTON_SIZE.content}
@@ -39,7 +37,7 @@ const Header = (props: HeaderProps): React.ReactElement => {
             Выйти
           </Button>
           <Button
-            callback={callbackProfile}
+            callback={() => callbackSetPage(PAGES.Profile)}
             color={BUTTON_COLOR.gray}
             size={BUTTON_SIZE.content}
           >
@@ -49,7 +47,7 @@ const Header = (props: HeaderProps): React.ReactElement => {
       ) : (
         <div className={styles.buttons}>
           <Button
-            callback={callbackLogin}
+            callback={() => callbackSetPage(PAGES.Login)}
             classNames={styles.mar_horiz}
             color={BUTTON_COLOR.gray}
             size={BUTTON_SIZE.content}
@@ -57,7 +55,7 @@ const Header = (props: HeaderProps): React.ReactElement => {
             Войти
           </Button>
           <Button
-            callback={callbackRegistration}
+            callback={() => callbackSetPage(PAGES.Registration)}
             color={BUTTON_COLOR.gray}
             size={BUTTON_SIZE.content}
           >

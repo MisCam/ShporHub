@@ -6,19 +6,19 @@ import Post from "../Post";
 import Menu from "./Menu";
 
 type MainPageProps = {
-  callbackShpor: () => void;
+  callbackSetPage: (page : string, logout? : boolean) => void;
   lessons: {name : string}[];
 };
 
 const MainPage = (props : MainPageProps): React.ReactElement => {
   const arr = [0, 0, 0, 0, 0];
-  const { callbackShpor } = props;
+  const { callbackSetPage } = props;
   return (
     <div>
       <PageLayout>
         <PageTitle text={`Шпоры по предмету: ${"АХАХАХ"}`} />
         {arr.map((value) => (
-          <Post callbackShpor={callbackShpor}/>
+          <Post callbackSetPage={callbackSetPage}/>
         ))}
         <Menu lessons={props.lessons} />
       </PageLayout>

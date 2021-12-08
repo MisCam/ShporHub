@@ -10,16 +10,7 @@ import MainPage from "../MainPage";
 import Profile from "../Profile";
 import Shpor from "../Shpor";
 
-const Pages = {
-  WelcomePage: "WelcomePage",
-  Login: "Login",
-  Registration: "Registration",
-  MainPage: "MainPage",
-  Shpor: "Shpor",
-  UploadShpor: "UploadShpor",
-  FAQ: "FAQ",
-  Profile: "Profile",
-};
+import { PAGES } from "./pages";
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -34,7 +25,7 @@ function App() {
   const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
     setNickname(nickname);
     setToken(actualToken);
-    setPage(Pages.MainPage);
+    setPage(PAGES.MainPage);
     setLogged(true);
     SetLessonsInState();
     setGroup(group_id);
@@ -43,14 +34,21 @@ function App() {
 
   const GetLessonsResponce = async function () {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getLessons`
+      `http://shporhub/api/index.php/?method=getLessons&token=${token}`
     );
     const result = await answer.json();
     return result.data;
   };
   const SetLessonsInState = () => {
     GetLessonsResponce().then((value) => {
-      setLessons(value);
+      if(value){
+        setLessons(value);
+      } else {
+        setLessons([
+          {name: 'предметы отсутствуют'}
+        ]);
+      }
+      
     });
   };
   const GroupsQuery = async function () {
@@ -72,46 +70,44 @@ function App() {
     GetGroups();
   });
 
+  const ChangePage = (page : string, logout : boolean = false) => {
+    setPage(page);
+    if(logout){
+      setLogged(false);
+    }
+  }
+
   return (
     <div className="App">
       <Header
         isLogged={logged}
         nick={nickName}
-        callbackLogin={() => setPage(Pages.Login)}
-        callbackLogout={() => {
-          setPage(Pages.WelcomePage);
-          setLogged(false);
-        }}
-        callbackProfile={() => setPage(Pages.Profile)}
-        callbackRegistration={() => setPage(Pages.Registration)}
+        callbackSetPage={ChangePage}
       ></Header>
-      {page === Pages.WelcomePage ? (
-        <WelcomePage callbackShpor={() => setPage(Pages.Shpor)} />
-      ) : page === Pages.Login ? (
+      {page === PAGES.WelcomePage ? (
+        <WelcomePage callbackSetPage={ChangePage} />
+      ) : page === PAGES.Login ? (
         <LoginPage
-          callbackBack={() => setPage(Pages.WelcomePage)}
-          callbackLogin={(nickname: string, token: string, group_id : number, course_id : number) =>
-            Login(nickname, token, group_id, course_id)
-          }
+          callbackSetPage={ChangePage}
+          callbackLogin={Login}
         />
-      ) : page === Pages.Registration ? (
+      ) : page === PAGES.Registration ? (
         <Registration
-          callbackBack={() => setPage(Pages.WelcomePage)}
-          callbackRegistration={() => setPage(Pages.Login)}
+          callbackSetPage={ChangePage}
           groups={groups}
         />
-      ) : page === Pages.MainPage ? (
+      ) : page === PAGES.MainPage ? (
         <MainPage
           lessons={lessons}
-          callbackShpor={() => setPage(Pages.Shpor)}
+          callbackSetPage={ChangePage}
         />
-      ) : page === Pages.Shpor ? (
+      ) : page === PAGES.Shpor ? (
         <Shpor />
-      ) : page === Pages.UploadShpor ? (
+      ) : page === PAGES.UploadShpor ? (
         <div></div>
-      ) : page === Pages.FAQ ? (
+      ) : page === PAGES.FAQ ? (
         <div></div>
-      ) : page === Pages.Profile ? (
+      ) : page === PAGES.Profile ? (
         <Profile
           nickname={nickName}
           groups={groups}
