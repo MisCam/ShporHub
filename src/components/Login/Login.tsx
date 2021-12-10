@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import cn from "clsx";
 
@@ -24,7 +24,8 @@ const Login = (props: LoginProps): React.ReactElement => {
   const { callbackLogin, callbackSetPage } = props;
   const login: React.Ref<HTMLInputElement> = React.createRef();
   const password: React.Ref<HTMLInputElement> = React.createRef();
-  const [isDataValid, setData] = useState("");
+  const [isLoginValid, setLogin] = useState("");
+  const [isPasswordValid, setPassword] = useState("");
 
   const Response = async function () {
     const md5 = require("md5");
@@ -41,20 +42,28 @@ const Login = (props: LoginProps): React.ReactElement => {
 
   const LoginFunc = () => {
     Response().then((value) => {
-      setData(DataInput.Active);
       if (value.result === "ok") {
         callbackLogin(login!.current!.value, value.data.token, value.data.group, value.data.course);
       } else {
-        setData(DataInput.Wrong);
+        setLogin(DataInput.Wrong);
+        setPassword(DataInput.Wrong);
       }
     });
   };
-  const ChangeInput = (input: string) => {
-    setData(DataInput.Active);
-    if (input !== "") {
-      setData(DataInput.Active);
+  const ChangeInput = (currentInput: string) => {
+    let input : string = '';
+    let func : (a: string) => void = setLogin;
+    if(currentInput === 'login'){
+      input = login!.current!.value;
     } else {
-      setData(DataInput.NotActive);
+      input = password!.current!.value;
+      func = setPassword;
+    }
+    func(DataInput.Active);
+    if (input !== "") {
+      func(DataInput.Active);
+    } else {
+      func(DataInput.NotActive);
     }
   };
 
@@ -64,14 +73,14 @@ const Login = (props: LoginProps): React.ReactElement => {
         <label>Авторизация</label>
         <input
           ref={login}
-          onChange={() => ChangeInput(login!.current!.value)}
-          className={cn(styles.input, isDataValid)}
+          onChange={() => ChangeInput('login')}
+          className={cn(styles.input, isLoginValid)}
           placeholder="Почта"
         />
         <input
           ref={password}
-          onChange={() => ChangeInput(password!.current!.value)}
-          className={cn(styles.input, isDataValid)}
+          onChange={() => ChangeInput('password')}
+          className={cn(styles.input, isPasswordValid)}
           placeholder="Пароль"
         />
         <Button
@@ -89,17 +98,6 @@ const Login = (props: LoginProps): React.ReactElement => {
           size={BUTTON_SIZE.normal}
         >
           Назад в меню
-        </Button>
-        <Button
-          callback={() => {
-            login!.current!.value = 'elprimo';
-            password!.current!.value = '123456';
-          }}
-          classNames={styles.marginTop}
-          color={BUTTON_COLOR.gray}
-          size={BUTTON_SIZE.normal}
-        >
-          Заполнить як elprimo
         </Button>
       </div>
     </div>

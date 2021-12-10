@@ -11,8 +11,6 @@ type MenuProps = {
 };
 
 const Menu = (props : MenuProps): React.ReactElement => {
-  console.log(props.lessons);
-  
   return (
     <div className={cn(styles.menu_wrapper)}>
       <button

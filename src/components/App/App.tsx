@@ -15,7 +15,6 @@ import { PAGES } from "./pages";
 function App() {
   const [logged, setLogged] = useState(false);
   const [nickName, setNickname] = useState("Unname");
-  const [token, setToken] = useState("");
   const [lessons, setLessons] = useState([{ name: "asd" }]);
   const [course, setCourse] = useState(2);
   const [group, setGroup] = useState(2);
@@ -24,7 +23,7 @@ function App() {
 
   const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
     setNickname(nickname);
-    setToken(actualToken);
+    localStorage.setItem('token', actualToken);
     setPage(PAGES.MainPage);
     setLogged(true);
     SetLessonsInState();
@@ -34,7 +33,7 @@ function App() {
 
   const GetLessonsResponce = async function () {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getLessons&token=${token}`
+      `http://shporhub/api/index.php/?method=getLessons&token=${localStorage.getItem('token')}`
     );
     const result = await answer.json();
     return result.data;
@@ -112,7 +111,7 @@ function App() {
           nickname={nickName}
           groups={groups}
           group={group}
-          token={token}
+          token={localStorage.getItem('token')}
           course={course}
           setGroup={setGroup}
           setCourse={setCourse}

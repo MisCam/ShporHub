@@ -11,7 +11,7 @@ type ProfileProps = {
   course: number;
   group: number;
   groups: Group[];
-  token: string;
+  token: string | null;
   setGroup: (groupId: number) => void;
   setCourse: (courseId: number) => void;
 };
