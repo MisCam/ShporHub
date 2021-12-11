@@ -24,6 +24,7 @@ function App() {
 
   const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
     setNickname(nickname);
+    localStorage.setItem('token', actualToken);
     setPage(PAGES.MainPage);  
     setLogged(true);
     SetLessonsInState();
