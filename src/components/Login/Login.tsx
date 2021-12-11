@@ -43,7 +43,6 @@ const Login = (props: LoginProps): React.ReactElement => {
   const LoginFunc = () => {
     Response().then((value) => {
       if (value.result === "ok") {
-        console.log('токен с сервера - ' + value.data.token);
         callbackLogin(login!.current!.value, value.data.token, value.data.group, value.data.course);
       } else {
         setLogin(DataInput.Wrong);

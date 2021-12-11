@@ -11,6 +11,7 @@ import Profile from "../Profile";
 import Shpor from "../Shpor";
 
 import { PAGES } from "./pages";
+import { NonNullChain } from "typescript";
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -23,17 +24,12 @@ function App() {
 
   const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
     setNickname(nickname);
-    console.log('actualToken - ' + actualToken + '. localStorage - ' + localStorage.getItem('token'));
-    localStorage.setItem('token', actualToken);
-    setPage(PAGES.MainPage);
+    setPage(PAGES.MainPage);  
     setLogged(true);
     SetLessonsInState();
     setGroup(group_id);
-    setCourse(course_id);
-    console.log('в конце логина localStorage - ' + localStorage.getItem('token'));
-    
+    setCourse(course_id);  
   };
-
   const GetLessonsResponce = async function () {
     const answer = await fetch(
       `http://shporhub/api/index.php/?method=getLessons&token=${localStorage.getItem('token')}`
@@ -50,7 +46,6 @@ function App() {
           {name: 'предметы отсутствуют'}
         ]);
       }
-      
     });
   };
   const GroupsQuery = async function () {
@@ -60,25 +55,22 @@ function App() {
     const result = await answer.json();
     return result;
   };
-
   const GetGroups = async function () {
     if (groups.length === 0) {
       const response = await GroupsQuery();
       setGroups(response.data);
     }
   };
-
-  useEffect(() => {
-    GetGroups();
-  });
-
   const ChangePage = (page : string, logout : boolean = false) => {
     setPage(page);
     if(logout){
       localStorage.setItem('token', '');
       setLogged(false);
     }
-  }
+  };
+  useEffect(() => {
+    GetGroups();
+  });
 
   return (
     <div className="App">

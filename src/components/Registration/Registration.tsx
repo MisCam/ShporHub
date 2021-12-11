@@ -49,7 +49,7 @@ const Registration = (props: LoginProps): React.ReactElement => {
     const response = await RegisterQuery();
     if (response.result === "error") return;
     if (response.data) {
-      callbackSetPage(PAGES.Registration);
+      callbackSetPage(PAGES.Login);
     } else {
       setLogin(DataInput.Wrong);
       setPassword(DataInput.Wrong);
