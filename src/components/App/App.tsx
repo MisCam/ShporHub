@@ -16,7 +16,7 @@ import { NonNullChain } from "typescript";
 function App() {
   const [logged, setLogged] = useState(false);
   const [nickName, setNickname] = useState("Unname");
-  const [lessons, setLessons] = useState([{ name: "asd" }]);
+  const [lessons, setLessons] = useState([{ name: "asd", id: '1' }]);
   const [course, setCourse] = useState(2);
   const [group, setGroup] = useState(2);
   const [groups, setGroups] = useState([]);
@@ -44,7 +44,7 @@ function App() {
         setLessons(value);
       } else {
         setLessons([
-          {name: 'предметы отсутствуют'}
+          {name: 'предметы отсутствуют', id: ''}
         ]);
       }
     });
