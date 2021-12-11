@@ -47,18 +47,18 @@ const Profile = (props: ProfileProps): React.ReactElement => {
           Курс
           <select
             className={styles.standartSelect}
-            onChange={() => ChangeCourse}
+            onChange={ChangeCourse}
           >
-            <option selected={course === 1 ? true : false} value="1">
+            <option selected={course == 1 ? true : false} value="1">
               1
             </option>
-            <option selected={course === 2 ? true : false} value="2">
+            <option selected={course == 2 ? true : false} value="2">
               2
             </option>
-            <option selected={course === 3 ? true : false} value="3">
+            <option selected={course == 3 ? true : false} value="3">
               3
             </option>
-            <option selected={course === 4 ? true : false} value="4">
+            <option selected={course == 4 ? true : false} value="4">
               4
             </option>
           </select>

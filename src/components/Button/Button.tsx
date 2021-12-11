@@ -28,7 +28,7 @@ type ButtonProps = {
 const Button = (props: ButtonProps): React.ReactElement => {
   const { classNames, color, size, children, callback } = props;
   return (
-    <button onClick={callback} className={cn(size, color, classNames)}>
+    <button onClick={callback} className={cn(styles.button, size, color, classNames)}>
       {children}
     </button>
   );

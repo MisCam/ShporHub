@@ -37,7 +37,7 @@ const Registration = (props: LoginProps): React.ReactElement => {
     const loginInput: string = login!.current!.value;
     const hash: string = md5(`${loginInput}${password!.current!.value}`);
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group_id=${
+      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group=${
         group!.current!.value
       }&course=${course!.current!.value}&name=${name!.current!.value}`
     );
@@ -112,19 +112,19 @@ const Registration = (props: LoginProps): React.ReactElement => {
         <label>Регистрация</label>
         <input
           ref={login}
-          onChange={() => ChangeInput('login')}
+          onChange={() => ChangeInput("login")}
           className={cn(styles.input, isLoginValid)}
           placeholder="Логин(> 6 символов)"
         />
         <input
           ref={password}
-          onChange={() => ChangeInput('password')}
+          onChange={() => ChangeInput("password")}
           className={cn(styles.input, isPasswordValid)}
           placeholder="Пароль(> 6 символов)"
         />
         <input
           ref={name}
-          onChange={() => ChangeInput('name')}
+          onChange={() => ChangeInput("name")}
           className={cn(styles.input, isNameValid)}
           placeholder="Имя (нас заставили)"
         />

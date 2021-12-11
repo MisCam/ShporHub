@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Button from "../../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../../Button/Button";
-import cn from 'clsx';
+import cn from "clsx";
 
 import styles from "./Menu.module.css";
 
 type MenuProps = {
-  lessons: {name : string}[];
+  lessons: { name: string }[];
+  callBackChangeSubject: (a : string) => void;
 };
 
-const Menu = (props : MenuProps): React.ReactElement => {
+const Menu = (props: MenuProps): React.ReactElement => {
+  const [isMenuOpen, setMenu] = useState(false);
   return (
-    <div className={cn(styles.menu_wrapper)}>
+    <div className={cn(styles.menu_wrapper, isMenuOpen ? styles.hide_menu : '')}>
       <button
-        onClick={() => {}}
+        onClick={() => {
+          setMenu(!isMenuOpen);
+        }}
         className={styles.turnOff}
       ></button>
       <div className={styles.nav_menu}>
@@ -24,7 +28,7 @@ const Menu = (props : MenuProps): React.ReactElement => {
             classNames={styles.marginBottom}
             color={BUTTON_COLOR.gray}
             size={BUTTON_SIZE.normal}
-            callback={() => {}}
+            callback={() => props.callBackChangeSubject(value.name)}
           >
             {value.name}
           </Button>

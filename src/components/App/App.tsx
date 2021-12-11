@@ -23,12 +23,15 @@ function App() {
 
   const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
     setNickname(nickname);
+    console.log('actualToken - ' + actualToken + '. localStorage - ' + localStorage.getItem('token'));
     localStorage.setItem('token', actualToken);
     setPage(PAGES.MainPage);
     setLogged(true);
     SetLessonsInState();
     setGroup(group_id);
     setCourse(course_id);
+    console.log('в конце логина localStorage - ' + localStorage.getItem('token'));
+    
   };
 
   const GetLessonsResponce = async function () {
@@ -72,6 +75,7 @@ function App() {
   const ChangePage = (page : string, logout : boolean = false) => {
     setPage(page);
     if(logout){
+      localStorage.setItem('token', '');
       setLogged(false);
     }
   }
