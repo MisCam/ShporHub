@@ -10,8 +10,14 @@ import { PAGES } from "../App/pages";
 import styles from "./Login.module.css";
 
 type LoginProps = {
-  callbackSetPage: (page : string, logout? : boolean) => void;
-  callbackLogin: (nickname: string, token: string, group_id : number, course_id : number) => void;
+  callbackSetPage: (page: string, logout?: boolean) => void;
+  callbackLogin: (
+    nickname: string,
+    token: string,
+    group_id: number,
+    course_id: number,
+    id: number,
+  ) => void;
 };
 
 const DataInput = {
@@ -43,7 +49,13 @@ const Login = (props: LoginProps): React.ReactElement => {
   const LoginFunc = () => {
     Response().then((value) => {
       if (value.result === "ok") {
-        callbackLogin(login!.current!.value, value.data.token, value.data.group, value.data.course);
+        callbackLogin(
+          login!.current!.value,
+          value.data.token,
+          value.data.group,
+          value.data.course,
+          value.data.id
+        );
       } else {
         setLogin(DataInput.Wrong);
         setPassword(DataInput.Wrong);
@@ -51,9 +63,9 @@ const Login = (props: LoginProps): React.ReactElement => {
     });
   };
   const ChangeInput = (currentInput: string) => {
-    let input : string = '';
-    let func : (a: string) => void = setLogin;
-    if(currentInput === 'login'){
+    let input: string = "";
+    let func: (a: string) => void = setLogin;
+    if (currentInput === "login") {
       input = login!.current!.value;
     } else {
       input = password!.current!.value;
@@ -73,13 +85,13 @@ const Login = (props: LoginProps): React.ReactElement => {
         <label>Авторизация</label>
         <input
           ref={login}
-          onChange={() => ChangeInput('login')}
+          onChange={() => ChangeInput("login")}
           className={cn(styles.input, isLoginValid)}
           placeholder="Почта"
         />
         <input
           ref={password}
-          onChange={() => ChangeInput('password')}
+          onChange={() => ChangeInput("password")}
           className={cn(styles.input, isPasswordValid)}
           placeholder="Пароль"
         />

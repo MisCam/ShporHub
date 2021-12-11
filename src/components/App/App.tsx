@@ -18,22 +18,24 @@ function App() {
   const [nickName, setNickname] = useState("Unname");
   const [lessons, setLessons] = useState([{ name: "asd", id: '1' }]);
   const [course, setCourse] = useState(2);
+  const [userId, setUserId] = useState(1);
   const [group, setGroup] = useState(2);
   const [groups, setGroups] = useState([]);
   const [page, setPage] = useState("WelcomePage");
 
-  const Login = (nickname: string, actualToken: string, group_id : number, course_id : number) => {
+  const Login = (nickname: string, actualToken: string, group_id : number, course_id : number, id : number) => {
     setNickname(nickname);
     localStorage.setItem('token', actualToken);
     setPage(PAGES.MainPage);  
     setLogged(true);
     SetLessonsInState();
     setGroup(group_id);
-    setCourse(course_id);  
+    setCourse(course_id); 
+    setUserId(id); 
   };
   const GetLessonsResponce = async function () {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getLessons&token=${localStorage.getItem('token')}`
+      `http://shporhub/api/index.php/?method=getLessons&id=${userId}&token=${localStorage.getItem('token')}`
     );
     const result = await answer.json();
     return result.data;
