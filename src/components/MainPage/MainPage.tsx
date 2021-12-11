@@ -7,7 +7,7 @@ import Menu from "./Menu";
 
 type MainPageProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
-  lessons: { name: string }[];
+  lessons: { name: string, id: string }[];
 };
 
 const MainPage = (props: MainPageProps): React.ReactElement => {

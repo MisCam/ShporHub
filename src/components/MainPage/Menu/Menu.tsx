@@ -7,7 +7,7 @@ import cn from "clsx";
 import styles from "./Menu.module.css";
 
 type MenuProps = {
-  lessons: { name: string }[];
+  lessons: { name: string, id: string }[];
   callBackChangeSubject: (a : string) => void;
 };
 
