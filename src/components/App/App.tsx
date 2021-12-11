@@ -25,13 +25,13 @@ function App() {
 
   const Login = (nickname: string, actualToken: string, group_id : number, course_id : number, id : number) => {
     setNickname(nickname);
+    setUserId(id); 
     localStorage.setItem('token', actualToken);
     setPage(PAGES.MainPage);  
     setLogged(true);
     SetLessonsInState();
     setGroup(group_id);
     setCourse(course_id); 
-    setUserId(id); 
   };
   const GetLessonsResponce = async function () {
     const answer = await fetch(
