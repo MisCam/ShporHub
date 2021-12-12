@@ -45,15 +45,19 @@ const Registration = (props: LoginProps): React.ReactElement => {
     return result;
   };
   const Register = async function () {
-    if (!checkValidInput()) return;
+    if (!checkValidInput()) {
+      WrongInputs();
+      return;
+    }
     const response = await RegisterQuery();
-    if (response.result === "error") return;
+    if (response.result === "error") {
+      WrongInputs();
+      return;
+    }
     if (response.data) {
       callbackSetPage(PAGES.Login);
     } else {
-      setLogin(DataInput.Wrong);
-      setPassword(DataInput.Wrong);
-      setName(DataInput.Wrong);
+      WrongInputs();
     }
   };
   const checkValidInput = () => {
@@ -63,9 +67,7 @@ const Registration = (props: LoginProps): React.ReactElement => {
       );
     const loginArray: string[] = login!.current!.value.split("");
     if (loginArray.length < 6 || password!.current!.value.length < 6) {
-      setLogin(DataInput.Wrong);
-      setPassword(DataInput.Wrong);
-      setName(DataInput.Wrong);
+      WrongInputs();
       return false;
     }
     for (let i = 0; i < loginArray.length; i++) {
@@ -79,13 +81,16 @@ const Registration = (props: LoginProps): React.ReactElement => {
       if (isCharValid) {
         isCharValid = false;
       } else {
-        setLogin(DataInput.Wrong);
-        setPassword(DataInput.Wrong);
-        setName(DataInput.Wrong);
+        WrongInputs();
         return false;
       }
     }
     return true;
+  };
+  const WrongInputs = () => {
+    setLogin(DataInput.Wrong);
+    setPassword(DataInput.Wrong);
+    setName(DataInput.Wrong);
   };
   const ChangeInput = (currentInput: string) => {
     let input: string = "";
