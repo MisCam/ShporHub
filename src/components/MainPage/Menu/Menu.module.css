@@ -4,7 +4,7 @@
   justify-content: center;
   width: fit-content;
   position: fixed;
-  right: 0;
+  right: -8px;
   top: 70px;
   transition: 1s;
   z-index: 13;
@@ -50,4 +50,10 @@
 
 .marginBottom {
     margin-bottom: 15px;
+}
+
+@media screen and (max-width: 670px) {
+    .turnOff {
+      width: 0;
+    }
 }

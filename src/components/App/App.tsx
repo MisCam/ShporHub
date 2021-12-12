@@ -1,6 +1,7 @@
 import "./App.css";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, RefCallback } from "react";
+import { useSwipeable } from "react-swipeable";
 
 import Header from "../Header";
 import WelcomePage from "../WelcomePage";
@@ -11,43 +12,63 @@ import Profile from "../Profile";
 import Shpor from "../Shpor";
 
 import { PAGES } from "./pages";
-import { NonNullChain } from "typescript";
 
 function App() {
   const [logged, setLogged] = useState(false);
   const [nickName, setNickname] = useState("Unname");
-  const [lessons, setLessons] = useState([{ name: "asd", id: '1' }]);
+  const [lessons, setLessons] = useState([{ name: "asd", id: "1" }]);
   const [course, setCourse] = useState(2);
   const [userId, setUserId] = useState(1);
   const [group, setGroup] = useState(2);
   const [groups, setGroups] = useState([]);
   const [page, setPage] = useState("WelcomePage");
+  const [isMenuOpen, setMenu] = useState(true);
+  const SwipeLeft = () => {
+    setMenu(false);
+  };
+  const SwipeRight = () => {
+    setMenu(true);
+  };
+  const { ref } = useSwipeable({
+    onSwipedLeft: SwipeLeft,
+    onSwipedRight: SwipeRight,
+  }) as { ref: RefCallback<Document> };
 
-  const Login = (nickname: string, actualToken: string, group_id : number, course_id : number, id : number) => {
+  useEffect(() => {
+    ref(document);
+  });
+
+  const Login = (
+    nickname: string,
+    actualToken: string,
+    group_id: number,
+    course_id: number,
+    id: number
+  ) => {
     setNickname(nickname);
-    setUserId(id); 
-    localStorage.setItem('token', actualToken);
-    setPage(PAGES.MainPage);  
+    setUserId(id);
+    localStorage.setItem("token", actualToken);
+    setPage(PAGES.MainPage);
     setLogged(true);
     SetLessonsInState();
     setGroup(group_id);
-    setCourse(course_id); 
+    setCourse(course_id);
   };
   const GetLessonsResponce = async function () {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getLessons&id=${userId}&token=${localStorage.getItem('token')}`
+      `http://shporhub/api/index.php/?method=getLessons&id=${userId}&token=${localStorage.getItem(
+        "token"
+      )}`
     );
     const result = await answer.json();
     return result.data;
   };
   const SetLessonsInState = () => {
     GetLessonsResponce().then((value) => {
-      if(value){
+      if (value) {
         setLessons(value);
       } else {
-        setLessons([
-          {name: 'предметы отсутствуют', id: ''}
-        ]);
+        setLessons([{ name: "предметы отсутствуют", id: "" }]);
       }
     });
   };
@@ -64,17 +85,16 @@ function App() {
       setGroups(response.data);
     }
   };
-  const ChangePage = (page : string, logout : boolean = false) => {
+  const ChangePage = (page: string, logout: boolean = false) => {
     setPage(page);
-    if(logout){
-      localStorage.setItem('token', '');
+    if (logout) {
+      localStorage.setItem("token", "");
       setLogged(false);
     }
   };
   useEffect(() => {
     GetGroups();
   });
-
   return (
     <div className="App">
       <Header
@@ -85,22 +105,18 @@ function App() {
       {page === PAGES.WelcomePage ? (
         <WelcomePage callbackSetPage={ChangePage} />
       ) : page === PAGES.Login ? (
-        <LoginPage
-          callbackSetPage={ChangePage}
-          callbackLogin={Login}
-        />
+        <LoginPage callbackSetPage={ChangePage} callbackLogin={Login} />
       ) : page === PAGES.Registration ? (
-        <Registration
-          callbackSetPage={ChangePage}
-          groups={groups}
-        />
+        <Registration callbackSetPage={ChangePage} groups={groups} />
       ) : page === PAGES.MainPage ? (
         <MainPage
+          setMenu={setMenu}
+          isMenuOpen={isMenuOpen}
           lessons={lessons}
           callbackSetPage={ChangePage}
         />
       ) : page === PAGES.Shpor ? (
-        <Shpor />
+        <Shpor callbackSetPage={ChangePage} />
       ) : page === PAGES.UploadShpor ? (
         <div></div>
       ) : page === PAGES.FAQ ? (
@@ -110,10 +126,12 @@ function App() {
           nickname={nickName}
           groups={groups}
           group={group}
-          token={localStorage.getItem('token')}
+          token={localStorage.getItem("token")}
+          changeLessons={SetLessonsInState}
           course={course}
           setGroup={setGroup}
           setCourse={setCourse}
+          callbackSetPage={ChangePage}
         />
       ) : (
         <div></div>

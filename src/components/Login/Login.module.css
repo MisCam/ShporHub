@@ -57,3 +57,9 @@
 .marginTop {
     margin-top: 20px;
 }
+
+@media screen and (max-width: 400px) {
+    .login {
+      width: 95%;
+    }
+}

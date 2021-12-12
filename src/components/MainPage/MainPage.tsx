@@ -8,11 +8,13 @@ import Menu from "./Menu";
 type MainPageProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
   lessons: { name: string, id: string }[];
+  isMenuOpen: boolean;
+  setMenu: (a: boolean) => void;
 };
 
 const MainPage = (props: MainPageProps): React.ReactElement => {
   const arr = [0, 0, 0, 0, 0];
-  const { callbackSetPage } = props;
+  const { callbackSetPage, isMenuOpen, setMenu } = props;
   const [currentSubject, setSubject] = useState("Не выбрано");
   const ChangeSubject = (subjectName: string) => {
     setSubject(subjectName);
@@ -24,7 +26,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
         {arr.map((value) => (
           <Post callbackSetPage={callbackSetPage} />
         ))}
-        <Menu lessons={props.lessons} callBackChangeSubject={ChangeSubject} />
+        <Menu setMenu={setMenu} isMenuOpen={isMenuOpen} lessons={props.lessons} callBackChangeSubject={ChangeSubject} />
       </PageLayout>
     </div>
   );

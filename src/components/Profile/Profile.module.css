@@ -9,6 +9,11 @@
     justify-content: space-between;
 }
 
+.greenBtn {
+    background-color: #50db00 !important;
+    box-shadow: 0 0 60px #50db00 !important;
+}
+
 .standartSelect {
     font-size: 20px;
     padding: 10px 40px;
@@ -16,4 +21,14 @@
     border-radius: 8px;
     color: #141414;
     cursor: pointer;
+}
+
+.marginTop {
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 670px) {
+    .title {
+      width: 90%;
+    }
 }

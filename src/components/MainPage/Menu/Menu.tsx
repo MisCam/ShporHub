@@ -7,17 +7,20 @@ import cn from "clsx";
 import styles from "./Menu.module.css";
 
 type MenuProps = {
-  lessons: { name: string, id: string }[];
-  callBackChangeSubject: (a : string) => void;
+  lessons: { name: string; id: string }[];
+  callBackChangeSubject: (a: string) => void;
+  isMenuOpen: boolean;
+  setMenu: (a: boolean) => void;
 };
 
 const Menu = (props: MenuProps): React.ReactElement => {
-  const [isMenuOpen, setMenu] = useState(false);
   return (
-    <div className={cn(styles.menu_wrapper, isMenuOpen ? styles.hide_menu : '')}>
+    <div
+      className={cn(styles.menu_wrapper, props.isMenuOpen ? styles.hide_menu : "")}
+    >
       <button
         onClick={() => {
-          setMenu(!isMenuOpen);
+          props.setMenu(!props.isMenuOpen);
         }}
         className={styles.turnOff}
       ></button>

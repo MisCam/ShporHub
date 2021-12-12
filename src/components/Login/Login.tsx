@@ -87,7 +87,7 @@ const Login = (props: LoginProps): React.ReactElement => {
           ref={login}
           onChange={() => ChangeInput("login")}
           className={cn(styles.input, isLoginValid)}
-          placeholder="Почта"
+          placeholder="Логин"
         />
         <input
           ref={password}

@@ -7,14 +7,19 @@
   margin-top: 20px;
 }
 
-.answers {
-  width: 50%;
-  height: 100%;
+.answers_wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: start;
   align-items: center;
-  justify-content: flex-start;
-  overflow-y: scroll;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 70%;
 }
 
 .title {
@@ -36,3 +41,10 @@
 .question img {
   width: 100%;
 }
+
+@media screen and (max-width: 700px) {
+  .wrapper {
+    width: 95%;
+  }
+}
+

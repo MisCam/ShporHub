@@ -114,13 +114,13 @@ const Registration = (props: LoginProps): React.ReactElement => {
           ref={login}
           onChange={() => ChangeInput("login")}
           className={cn(styles.input, isLoginValid)}
-          placeholder="Логин(> 6 символов)"
+          placeholder="Логин(> 5 символов)"
         />
         <input
           ref={password}
           onChange={() => ChangeInput("password")}
           className={cn(styles.input, isPasswordValid)}
-          placeholder="Пароль(> 6 символов)"
+          placeholder="Пароль(> 5 символов)"
         />
         <input
           ref={name}

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import PageLayout from "../PageLayout";
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
+import cn from "clsx";
+import { PAGES } from "../App/pages";
 
 import styles from "./Profile.module.css";
 
@@ -14,18 +16,31 @@ type ProfileProps = {
   token: string | null;
   setGroup: (groupId: number) => void;
   setCourse: (courseId: number) => void;
+  changeLessons: () => void;
+  callbackSetPage: (page: string, logout?: boolean) => void;
 };
 type Group = {
   id: number;
   name: string;
 };
 const Profile = (props: ProfileProps): React.ReactElement => {
-  const { nickname, course, group, token, groups, setGroup, setCourse } = props;
+  const {
+    nickname,
+    course,
+    group,
+    token,
+    groups,
+    setGroup,
+    setCourse,
+    changeLessons,
+    callbackSetPage,
+  } = props;
+  const [isBtnStyleOk, setStyle] = useState(false);
   let courseSelect = course;
   let groupSelect = group;
   const ChangeCourse = (event: React.ChangeEvent<HTMLSelectElement>) => {
     courseSelect = parseInt(event.target.value);
-  }
+  };
   const ChangeGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
     groupSelect = parseInt(event.target.value);
   };
@@ -37,6 +52,11 @@ const Profile = (props: ProfileProps): React.ReactElement => {
     if (response.data) {
       setGroup(groupSelect);
       setCourse(courseSelect);
+      changeLessons();
+      setStyle(true);
+      setTimeout(() => {
+        setStyle(false);
+      }, 2500);
     }
   };
   return (
@@ -45,10 +65,7 @@ const Profile = (props: ProfileProps): React.ReactElement => {
         <label className={styles.title}>Логин: {nickname}</label>
         <label className={styles.title}>
           Курс
-          <select
-            className={styles.standartSelect}
-            onChange={ChangeCourse}
-          >
+          <select className={styles.standartSelect} onChange={ChangeCourse}>
             <option selected={course == 1 ? true : false} value="1">
               1
             </option>
@@ -65,10 +82,7 @@ const Profile = (props: ProfileProps): React.ReactElement => {
         </label>
         <label className={styles.title}>
           Направление
-          <select
-            className={styles.standartSelect}
-            onChange={ChangeGroup}
-          >
+          <select className={styles.standartSelect} onChange={ChangeGroup}>
             {groups.map((value) => (
               <option
                 selected={group == value.id ? true : false}
@@ -80,12 +94,22 @@ const Profile = (props: ProfileProps): React.ReactElement => {
           </select>
         </label>
         <Button
-          classNames={styles.marginBottom}
+          classNames={cn(
+            isBtnStyleOk ? styles.greenBtn : ""
+          )}
           color={BUTTON_COLOR.gray}
           size={BUTTON_SIZE.normal}
           callback={ChangeInfo}
         >
           Сохранить изменения
+        </Button>
+        <Button
+          classNames={styles.marginTop}
+          color={BUTTON_COLOR.gray}
+          size={BUTTON_SIZE.normal}
+          callback={() => callbackSetPage(PAGES.MainPage)}
+        >
+          Назад
         </Button>
       </PageLayout>
     </div>

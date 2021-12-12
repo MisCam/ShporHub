@@ -88,3 +88,9 @@ option {
   height: 30px;
   background-color: #474747;
 }
+
+@media screen and (max-width: 400px) {
+    .registration {
+      max-width: 95%;
+    }
+}

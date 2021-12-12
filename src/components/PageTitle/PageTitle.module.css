@@ -3,4 +3,11 @@
   color: #686868;
   margin-bottom: 20px;
   text-transform: uppercase;
+  text-align: center;
+}
+
+@media screen and (max-width: 610px) {
+  .title {
+    font-size: 20px;
+  }
 }
