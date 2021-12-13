@@ -7,14 +7,26 @@ import Menu from "./Menu";
 
 type MainPageProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
-  lessons: { name: string, id: string }[];
+  lessons: { name: string; id: string }[];
   isMenuOpen: boolean;
+  shporsByLesson: {
+    data: string;
+    type: string;
+    shpor_id: string;
+    discription: string;
+    img: string;
+  }[];
+  setShporsInState: (a: string) => void;
   setMenu: (a: boolean) => void;
 };
 
 const MainPage = (props: MainPageProps): React.ReactElement => {
-  const arr = [0, 0, 0, 0, 0];
-  const { callbackSetPage, isMenuOpen, setMenu } = props;
+  const {
+    callbackSetPage,
+    isMenuOpen,
+    setMenu,
+    setShporsInState,
+  } = props;
   const [currentSubject, setSubject] = useState("Не выбрано");
   const ChangeSubject = (subjectName: string) => {
     setSubject(subjectName);
@@ -23,10 +35,23 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
     <div>
       <PageLayout>
         <PageTitle text={`Шпоры по предмету: ${currentSubject}`} />
-        {arr.map((value) => (
-          <Post callbackSetPage={callbackSetPage} />
+        {props.shporsByLesson.map((value) => (
+          <Post
+            data={value.data}
+            type={value.type}
+            img={value.img}
+            shpor_id={value.shpor_id}
+            discription={value.discription}
+            setShporsInState={setShporsInState}
+            callbackSetPage={callbackSetPage}
+          />
         ))}
-        <Menu setMenu={setMenu} isMenuOpen={isMenuOpen} lessons={props.lessons} callBackChangeSubject={ChangeSubject} />
+        <Menu
+          setMenu={setMenu}
+          isMenuOpen={isMenuOpen}
+          lessons={props.lessons}
+          callBackChangeSubject={ChangeSubject}
+        />
       </PageLayout>
     </div>
   );

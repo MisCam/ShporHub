@@ -3,30 +3,49 @@ import React from "react";
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 
-import TestImg from '../../assets/test.jpg';
+import TestImg from "../../assets/test.jpg";
 
 import { PAGES } from "../App/pages";
 
 import styles from "./Post.module.css";
 
 type PostProps = {
-  callbackSetPage: (page : string, logout? : boolean) => void;
+  callbackSetPage: (page: string, logout?: boolean) => void;
+  setShporsInState: (a: string) => void;
+  data: string;
+  type: string;
+  discription: string;
+  img: string;
+  shpor_id: string;
 };
 
-const Post = (props : PostProps): React.ReactElement => {
-  const { callbackSetPage } = props;
+const Post = (props: PostProps): React.ReactElement => {
+  const {
+    callbackSetPage,
+    setShporsInState,
+    data,
+    type,
+    discription,
+    img,
+    shpor_id,
+  } = props;
   return (
     <div className={styles.post}>
-      <label>Время проведения: 13.09.2019</label>
-      <label>Тип: контрольная</label>
-      <label className={styles.test_description}>
-        Тут мы указываем абсолютно все подробности работы, кто проводил, какая
-        была тема и так далее, что бы пользователь понял, то это или нет
-      </label>
+      <label>{data}</label>
+      <label>Тип: {type}</label>
+      <label className={styles.test_description}>{discription}</label>
       <div className={styles.image}>
-        <img src={TestImg} alt="post_img"></img>
+        <img src={img} alt="post_img"></img>
       </div>
-      <Button callback={() => callbackSetPage(PAGES.Shpor)} classNames={styles.button} size={BUTTON_SIZE.content} color={BUTTON_COLOR.gray}>
+      <Button
+        callback={() => {
+          setShporsInState(shpor_id);
+          callbackSetPage(PAGES.Shpor);
+        }}
+        classNames={styles.button}
+        size={BUTTON_SIZE.content}
+        color={BUTTON_COLOR.gray}
+      >
         Посмотреть ответы
       </Button>
     </div>

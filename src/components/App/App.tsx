@@ -17,6 +17,9 @@ function App() {
   const [logged, setLogged] = useState(false);
   const [nickName, setNickname] = useState("Unname");
   const [lessons, setLessons] = useState([{ name: "asd", id: "1" }]);
+  const [shporsByLesson, setShporsByLesson] = useState([
+    { data: "asd", type: '', shpor_id: "1", discription: 'asdasd', img: ''}
+  ]);
   const [course, setCourse] = useState(2);
   const [group, setGroup] = useState(2);
   const [groups, setGroups] = useState([]);
@@ -92,6 +95,22 @@ function App() {
       setLogged(false);
     }
   };
+  const GetShporsByLesson = async function (shpor_id : string) {
+    const answer = await fetch(
+      `http://shporhub/api/index.php/?method=getLessons&shpor_id=${shpor_id}`
+    );
+    const result = await answer.json();
+    return result.data;
+  };
+  const SetShporsInState = (shpor_id : string) => {
+    GetShporsByLesson(shpor_id).then((value) => {
+      if (value) {
+        setShporsByLesson(value);
+      } else {
+        setShporsByLesson([{ data: "asd", type: '', shpor_id: "1", discription: 'asdasd', img: ''}]);
+      }
+    });
+  }
   useEffect(() => {
     GetGroups();
   });
@@ -113,7 +132,9 @@ function App() {
           setMenu={setMenu}
           isMenuOpen={isMenuOpen}
           lessons={lessons}
+          shporsByLesson={shporsByLesson}
           callbackSetPage={ChangePage}
+          setShporsInState={SetShporsInState}
         />
       ) : page === PAGES.Shpor ? (
         <Shpor callbackSetPage={ChangePage} />
