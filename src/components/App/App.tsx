@@ -97,7 +97,7 @@ function App() {
   };
   const GetShporsByLesson = async function (shpor_id: string) {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getLessons&shpor_id=${shpor_id}`
+      `http://shporhub/api/index.php/?method=getShporsByLesson&shpor_id=${shpor_id}`
     );
     const result = await answer.json();
     return result.data;
