@@ -42,7 +42,6 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
             img={value.img}
             shpor_id={value.shpor_id}
             discription={value.discription}
-            setShporsInState={setShporsInState}
             callbackSetPage={callbackSetPage}
           />
         ))}
@@ -50,6 +49,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
           setMenu={setMenu}
           isMenuOpen={isMenuOpen}
           lessons={props.lessons}
+          setShporsInState={setShporsInState}
           callBackChangeSubject={ChangeSubject}
         />
       </PageLayout>

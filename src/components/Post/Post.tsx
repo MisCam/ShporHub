@@ -11,7 +11,6 @@ import styles from "./Post.module.css";
 
 type PostProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
-  setShporsInState: (a: string) => void;
   data: string;
   type: string;
   discription: string;
@@ -22,7 +21,6 @@ type PostProps = {
 const Post = (props: PostProps): React.ReactElement => {
   const {
     callbackSetPage,
-    setShporsInState,
     data,
     type,
     discription,
@@ -38,10 +36,7 @@ const Post = (props: PostProps): React.ReactElement => {
         <img src={img} alt="post_img"></img>
       </div>
       <Button
-        callback={() => {
-          setShporsInState(shpor_id);
-          callbackSetPage(PAGES.Shpor);
-        }}
+        callback={() => callbackSetPage(PAGES.Shpor)}
         classNames={styles.button}
         size={BUTTON_SIZE.content}
         color={BUTTON_COLOR.gray}

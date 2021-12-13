@@ -29,7 +29,6 @@ const WelcomePage = (props: WelcomePageProps): React.ReactElement => {
             img={value.img}
             shpor_id={value.shpor_id}
             discription={value.discription}
-            setShporsInState={setShporsInState}
             callbackSetPage={callbackSetPage}
           />
         ))}
