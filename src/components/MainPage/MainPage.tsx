@@ -10,10 +10,10 @@ type MainPageProps = {
   lessons: { name: string; id: string }[];
   isMenuOpen: boolean;
   shporsByLesson: {
-    data: string;
+    date: string;
     type: string;
     shpor_id: string;
-    discription: string;
+    description: string;
     img: string;
   }[];
   setShporsInState: (a: string) => void;
@@ -37,11 +37,11 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
         <PageTitle text={`Шпоры по предмету: ${currentSubject}`} />
         {props.shporsByLesson.map((value) => (
           <Post
-            data={value.data}
+            data={value.date}
             type={value.type}
             img={value.img}
             shpor_id={value.shpor_id}
-            discription={value.discription}
+            discription={value.description}
             callbackSetPage={callbackSetPage}
           />
         ))}

@@ -18,7 +18,7 @@ function App() {
   const [nickName, setNickname] = useState("Unname");
   const [lessons, setLessons] = useState([{ name: "asd", id: "1" }]);
   const [shporsByLesson, setShporsByLesson] = useState([
-    { data: "asd", type: "", shpor_id: "1", discription: "asdasd", img: "" },
+    { date: "asd", type: "", shpor_id: "1", description: "asdasd", img: "" },
   ]);
   const [course, setCourse] = useState(2);
   const [group, setGroup] = useState(2);
@@ -109,10 +109,10 @@ function App() {
       } else {
         setShporsByLesson([
           {
-            data: "asd",
+            date: "asd",
             type: "",
             shpor_id: "1",
-            discription: "asdasd",
+            description: "asdasd",
             img: "",
           },
         ]);
@@ -132,7 +132,6 @@ function App() {
       {page === PAGES.WelcomePage ? (
         <WelcomePage
           setShporsInState={SetShporsInState}
-          shporsByLesson={shporsByLesson}
           callbackSetPage={ChangePage}
         />
       ) : page === PAGES.Login ? (

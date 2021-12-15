@@ -7,13 +7,6 @@ import Post from "../Post";
 type WelcomePageProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
   setShporsInState: (a: string) => void;
-  shporsByLesson: {
-    data: string;
-    type: string;
-    shpor_id: string;
-    discription: string;
-    img: string;
-  }[];
 };
 
 const WelcomePage = (props: WelcomePageProps): React.ReactElement => {
