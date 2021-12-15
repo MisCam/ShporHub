@@ -69,8 +69,6 @@ function App() {
     GetLessonsResponce().then((value) => {
       if (value) {
         setLessons(value);
-      } else {
-        setLessons([{ name: "предметы отсутствуют", id: "" }]);
       }
     });
   };

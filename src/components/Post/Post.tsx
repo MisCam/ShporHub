@@ -29,7 +29,7 @@ const Post = (props: PostProps): React.ReactElement => {
   } = props;
   return (
     <div className={styles.post}>
-      <label>{data}</label>
+      <label>Дата проведения: {data}</label>
       <label>Тип: {type}</label>
       <label className={styles.test_description}>{discription}</label>
       <div className={styles.image}>

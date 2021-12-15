@@ -35,7 +35,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
     <div>
       <PageLayout>
         <PageTitle text={`Шпоры по предмету: ${currentSubject}`} />
-        {props.shporsByLesson.map((value) => (
+        {props.shporsByLesson ? props.shporsByLesson.map((value) => (
           <Post
             data={value.date}
             type={value.type}
@@ -44,7 +44,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
             discription={value.description}
             callbackSetPage={callbackSetPage}
           />
-        ))}
+        )) : <label>Шпор по предмету не найдено :(</label>}
         <Menu
           setMenu={setMenu}
           isMenuOpen={isMenuOpen}
