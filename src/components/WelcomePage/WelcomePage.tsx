@@ -21,17 +21,8 @@ const WelcomePage = (props: WelcomePageProps): React.ReactElement => {
   return (
     <div>
       <PageLayout>
-        <PageTitle text={"Последние обновления"} />
-        {props.shporsByLesson.map((value, index) => (
-          <Post
-            data={value.data}
-            type={value.type}
-            img={value.img}
-            shpor_id={value.shpor_id}
-            discription={value.discription}
-            callbackSetPage={callbackSetPage}
-          />
-        ))}
+        <PageTitle text={"Приветствуем, милорд"} />
+        <label>ХАХАХАХАХАХАХАХАХАХАХАХАХ</label>
       </PageLayout>
     </div>
   );

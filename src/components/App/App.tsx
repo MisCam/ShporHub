@@ -95,15 +95,15 @@ function App() {
       setLogged(false);
     }
   };
-  const GetShporsByLesson = async function (shpor_id: string) {
+  const GetShporsByLesson = async function (discipline_id: string) {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getShporsByLesson&shpor_id=${shpor_id}`
+      `http://shporhub/api/index.php/?method=getShporsByLesson&discipline_id=${discipline_id}`
     );
     const result = await answer.json();
     return result.data;
   };
-  const SetShporsInState = (shpor_id: string) => {
-    GetShporsByLesson(shpor_id).then((value) => {
+  const SetShporsInState = (discipline_id: string) => {
+    GetShporsByLesson(discipline_id).then((value) => {
       if (value) {
         setShporsByLesson(value);
       } else {
