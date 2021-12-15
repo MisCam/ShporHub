@@ -20,6 +20,7 @@ function App() {
   const [shporsByLesson, setShporsByLesson] = useState([
     { date: "asd", type: "", shpor_id: "1", description: "asdasd", img: "" },
   ]);
+  const [shporImages, setShporImages] = useState([{ img: "asd", num: "1" }]);
   const [course, setCourse] = useState(2);
   const [group, setGroup] = useState(2);
   const [groups, setGroups] = useState([]);
@@ -35,10 +36,6 @@ function App() {
     onSwipedLeft: SwipeLeft,
     onSwipedRight: SwipeRight,
   }) as { ref: RefCallback<Document> };
-
-  useEffect(() => {
-    ref(document);
-  });
 
   const Login = (
     nickname: string,
@@ -104,21 +101,26 @@ function App() {
     GetShporsByLesson(discipline_id).then((value) => {
       if (value) {
         setShporsByLesson(value);
-      } else {
-        setShporsByLesson([
-          {
-            date: "asd",
-            type: "",
-            shpor_id: "1",
-            description: "asdasd",
-            img: "",
-          },
-        ]);
+      }
+    });
+  };
+  const GetShporByIdResponse = async function (shpor_id: string) {
+    const answer = await fetch(
+      `http://shporhub/api/index.php/?method=getShporById&shpor_id=${shpor_id}`
+    );
+    const result = await answer.json();
+    return result.data;
+  };
+  const GetShporsById = (id: string) => {
+    GetShporByIdResponse(id).then((value) => {
+      if (value) {
+        setShporImages(value);
       }
     });
   };
   useEffect(() => {
     GetGroups();
+    ref(document);
   });
   return (
     <div className="App">
@@ -144,9 +146,10 @@ function App() {
           shporsByLesson={shporsByLesson}
           callbackSetPage={ChangePage}
           setShporsInState={SetShporsInState}
+          setShporImages={GetShporsById}
         />
       ) : page === PAGES.Shpor ? (
-        <Shpor callbackSetPage={ChangePage} />
+        <Shpor variants={shporImages} callbackSetPage={ChangePage} />
       ) : page === PAGES.UploadShpor ? (
         <div></div>
       ) : page === PAGES.FAQ ? (

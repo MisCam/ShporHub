@@ -3,14 +3,13 @@ import React from "react";
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 
-import TestImg from "../../assets/test.jpg";
-
 import { PAGES } from "../App/pages";
 
 import styles from "./Post.module.css";
 
 type PostProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
+  setShporImages: (id : string) => void;
   data: string;
   type: string;
   discription: string;
@@ -26,6 +25,7 @@ const Post = (props: PostProps): React.ReactElement => {
     discription,
     img,
     shpor_id,
+    setShporImages
   } = props;
   return (
     <div className={styles.post}>
@@ -36,7 +36,10 @@ const Post = (props: PostProps): React.ReactElement => {
         <img src={img} alt="post_img"></img>
       </div>
       <Button
-        callback={() => callbackSetPage(PAGES.Shpor)}
+        callback={() => {
+          callbackSetPage(PAGES.Shpor);
+          setShporImages(shpor_id);
+        }}
         classNames={styles.button}
         size={BUTTON_SIZE.content}
         color={BUTTON_COLOR.gray}

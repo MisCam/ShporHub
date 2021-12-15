@@ -18,6 +18,7 @@ type MainPageProps = {
   }[];
   setShporsInState: (a: string) => void;
   setMenu: (a: boolean) => void;
+  setShporImages: (id : string) => void;
 };
 
 const MainPage = (props: MainPageProps): React.ReactElement => {
@@ -26,6 +27,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
     isMenuOpen,
     setMenu,
     setShporsInState,
+    setShporImages
   } = props;
   const [currentSubject, setSubject] = useState("Не выбрано");
   const ChangeSubject = (subjectName: string) => {
@@ -43,6 +45,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
             shpor_id={value.shpor_id}
             discription={value.description}
             callbackSetPage={callbackSetPage}
+            setShporImages={setShporImages}
           />
         )) : <label>Шпор по предмету не найдено :(</label>}
         <Menu

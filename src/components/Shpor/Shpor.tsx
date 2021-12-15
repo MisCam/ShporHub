@@ -4,17 +4,16 @@ import cn from "clsx";
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 import { PAGES } from "../App/pages";
-import Test from "../../assets/test.jpg";
 
 import styles from "./Shpor.module.css";
 import PageLayout from "../PageLayout";
 
 type ShporProps = {
   callbackSetPage: (page: string, logout?: boolean) => void;
+  variants: { img: string; num: string }[];
 };
 
-const Shpor = (props : ShporProps): React.ReactElement => {
-  const variants = [0, 0, 0, 0, 0];
+const Shpor = (props: ShporProps): React.ReactElement => {
   const { callbackSetPage } = props;
   return (
     <div>
@@ -29,16 +28,23 @@ const Shpor = (props : ShporProps): React.ReactElement => {
             >
               Назад
             </Button>
-            {variants.map((value) => (
+            {props.variants.map((value) => (
               <div className={styles.wrapper}>
-                <label className={styles.title}>Вариант</label>
-                <div className={styles.answer}>
-                  <img src={Test} alt="question"></img>
-                </div>
-                <label className={styles.title}>Ответ на вариант</label>
-                <div className={styles.answer}>
-                  <img src={Test} alt="answer"></img>
-                </div>
+                {parseInt(value.num) % 2 === 1 ? (
+                  <div>
+                    <label className={styles.title}>Вариант</label>
+                    <div className={styles.answer}>
+                      <img src={value.img} alt="question"></img>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <label className={styles.title}>Ответ на вариант</label>
+                    <div className={styles.answer}>
+                      <img src={value.img} alt="answer"></img>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
