@@ -30,7 +30,7 @@
 
 .answer,
 .question {
-  width: 100%;
+  width: 800px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,9 +42,29 @@
   width: 100%;
 }
 
+.photo_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media screen and (max-width: 850px) {
+  .answer,
+  .question {
+    width: 500px;
+  }
+}
+
 @media screen and (max-width: 700px) {
   .wrapper {
     width: 95%;
   }
 }
 
+@media screen and (max-width: 540px) {
+  .answer,
+  .question {
+    width: 320px;
+  }
+}

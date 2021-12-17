@@ -64,9 +64,12 @@ function App() {
   };
   const SetLessonsInState = () => {
     GetLessonsResponce().then((value) => {
+      setShporsByLesson([]);
       if (value) {
         setLessons(value);
+        return;
       }
+      setLessons([]);
     });
   };
   const GroupsQuery = async function () {
@@ -101,21 +104,25 @@ function App() {
     GetShporsByLesson(discipline_id).then((value) => {
       if (value) {
         setShporsByLesson(value);
+        return;
       }
+      setShporsByLesson([]);
     });
   };
   const GetShporByIdResponse = async function (shpor_id: string) {
     const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getShporById&shpor_id=${shpor_id}`
+      `http://shporhub/api/index.php/?method=getShporsById&shpor_id=${shpor_id}`
     );
     const result = await answer.json();
     return result.data;
   };
   const GetShporsById = (id: string) => {
-    GetShporByIdResponse(id).then((value) => {
+    GetShporByIdResponse(id).then((value) => {     
       if (value) {
         setShporImages(value);
+        return;
       }
+      setShporImages([]);
     });
   };
   useEffect(() => {
@@ -130,10 +137,7 @@ function App() {
         callbackSetPage={ChangePage}
       ></Header>
       {page === PAGES.WelcomePage ? (
-        <WelcomePage
-          setShporsInState={SetShporsInState}
-          callbackSetPage={ChangePage}
-        />
+        <WelcomePage/>
       ) : page === PAGES.Login ? (
         <LoginPage callbackSetPage={ChangePage} callbackLogin={Login} />
       ) : page === PAGES.Registration ? (

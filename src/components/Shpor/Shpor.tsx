@@ -31,15 +31,15 @@ const Shpor = (props: ShporProps): React.ReactElement => {
             {props.variants.map((value) => (
               <div className={styles.wrapper}>
                 {parseInt(value.num) % 2 === 1 ? (
-                  <div>
-                    <label className={styles.title}>Вариант</label>
-                    <div className={styles.answer}>
+                  <div className={styles.photo_wrapper}>
+                    <label className={styles.title}>Вариант ↓</label>
+                    <div className={styles.question}>
                       <img src={value.img} alt="question"></img>
                     </div>
                   </div>
                 ) : (
-                  <div>
-                    <label className={styles.title}>Ответ на вариант</label>
+                  <div className={styles.photo_wrapper}>
+                    <label className={styles.title}>Ответ на вариант ↓</label>
                     <div className={styles.answer}>
                       <img src={value.img} alt="answer"></img>
                     </div>
