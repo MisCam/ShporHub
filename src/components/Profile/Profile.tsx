@@ -52,6 +52,8 @@ const Profile = (props: ProfileProps): React.ReactElement => {
     if (response.data) {
       setGroup(groupSelect);
       setCourse(courseSelect);
+      localStorage.setItem("course", `${courseSelect}`);
+      localStorage.setItem("group", `${groupSelect}`);
       changeLessons();
       setStyle(true);
       setTimeout(() => {

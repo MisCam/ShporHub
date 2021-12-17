@@ -25,7 +25,7 @@ function App() {
   const [group, setGroup] = useState(2);
   const [groups, setGroups] = useState([]);
   const [page, setPage] = useState("WelcomePage");
-  const [isMenuOpen, setMenu] = useState(true);
+  const [isMenuOpen, setMenu] = useState(false);
   const SwipeLeft = () => {
     setMenu(false);
   };
@@ -45,8 +45,7 @@ function App() {
     id: number
   ) => {
     setNickname(nickname);
-    localStorage.setItem("id", `${id}`);
-    localStorage.setItem("token", actualToken);
+    SetInfoInLocalStorage('1', nickname, actualToken, `${id}`, `${course_id}`, `${group_id}`);
     setPage(PAGES.MainPage);
     setLogged(true);
     SetLessonsInState();
@@ -88,8 +87,7 @@ function App() {
   const ChangePage = (page: string, logout: boolean = false) => {
     setPage(page);
     if (logout) {
-      localStorage.setItem("token", "");
-      localStorage.setItem("id", "");
+      SetInfoInLocalStorage('0', '', '', '', '', '');
       setLogged(false);
     }
   };
@@ -117,7 +115,7 @@ function App() {
     return result.data;
   };
   const GetShporsById = (id: string) => {
-    GetShporByIdResponse(id).then((value) => {     
+    GetShporByIdResponse(id).then((value) => {
       if (value) {
         setShporImages(value);
         return;
@@ -125,7 +123,30 @@ function App() {
       setShporImages([]);
     });
   };
+  const SetInfoInLocalStorage = (
+    logged: '1' | '0', 
+    nickname: string, 
+    token: string, 
+    id: string, 
+    course: string, 
+    group: string
+  ) => {
+    localStorage.setItem("logged", logged);
+    localStorage.setItem("nickname", nickname);
+    localStorage.setItem("token", token);
+    localStorage.setItem("id", id);
+    localStorage.setItem("course", course);
+    localStorage.setItem("group", group);
+  };
   useEffect(() => {
+    if (localStorage.getItem("logged") === '1' && nickName === 'Unname') {
+      setNickname(localStorage.getItem("nickname") || '');
+      setPage(PAGES.MainPage);
+      setLogged(true);
+      setGroup(parseInt(localStorage.getItem("group") || ''));
+      setCourse(parseInt(localStorage.getItem("course") || ''));
+      SetLessonsInState();
+    }
     GetGroups();
     ref(document);
   });
@@ -137,7 +158,7 @@ function App() {
         callbackSetPage={ChangePage}
       ></Header>
       {page === PAGES.WelcomePage ? (
-        <WelcomePage/>
+        <WelcomePage />
       ) : page === PAGES.Login ? (
         <LoginPage callbackSetPage={ChangePage} callbackLogin={Login} />
       ) : page === PAGES.Registration ? (
