@@ -5,6 +5,7 @@ import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 import cn from "clsx";
 import { PAGES } from "../App/pages";
+import Server from "../../classes/Server";
 
 import styles from "./Profile.module.css";
 
@@ -35,6 +36,7 @@ const Profile = (props: ProfileProps): React.ReactElement => {
     changeLessons,
     callbackSetPage,
   } = props;
+  const server = new Server();
   const [isBtnStyleOk, setStyle] = useState(false);
   let courseSelect = course;
   let groupSelect = group;
@@ -44,23 +46,17 @@ const Profile = (props: ProfileProps): React.ReactElement => {
   const ChangeGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
     groupSelect = parseInt(event.target.value);
   };
-  const ChangeInfo = async function () {
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=updateProfile&course=${courseSelect}&group=${groupSelect}&token=${token}`
+  const ChangeInfo = () => {
+    server.ChangeInfo(
+      groupSelect,
+      courseSelect,
+      setGroup,
+      setCourse,
+      changeLessons,
+      setStyle
     );
-    const response = await answer.json();
-    if (response.data) {
-      setGroup(groupSelect);
-      setCourse(courseSelect);
-      localStorage.setItem("course", `${courseSelect}`);
-      localStorage.setItem("group", `${groupSelect}`);
-      changeLessons();
-      setStyle(true);
-      setTimeout(() => {
-        setStyle(false);
-      }, 2500);
-    }
   };
+
   return (
     <div>
       <PageLayout>

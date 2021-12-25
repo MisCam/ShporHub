@@ -5,6 +5,7 @@ import cn from "clsx";
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
 import { PAGES } from "../App/pages";
+import Server from "../../classes/Server";
 
 import styles from "./Registration.module.css";
 
@@ -31,34 +32,30 @@ const Registration = (props: LoginProps): React.ReactElement => {
   const [isLoginValid, setLogin] = useState("");
   const [isPasswordValid, setPassword] = useState("");
   const [isNameValid, setName] = useState("");
+  const server = new Server();
 
-  const RegisterQuery = async function () {
-    const md5 = require("md5");
-    const loginInput: string = login!.current!.value;
-    const hash: string = md5(`${loginInput}${password!.current!.value}`);
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=registration&hash=${hash}&login=${loginInput}&group=${
-        group!.current!.value
-      }&course=${course!.current!.value}&name=${name!.current!.value}`
-    );
-    const result = await answer.json();
-    return result;
-  };
-  const Register = async function () {
+  const Register = () => {
     if (!checkValidInput()) {
       WrongInputs();
       return;
     }
-    const response = await RegisterQuery();
-    if (response.result === "error") {
-      WrongInputs();
-      return;
-    }
-    if (response.data) {
-      callbackSetPage(PAGES.Login);
-    } else {
-      WrongInputs();
-    }
+    server.RegisterQuery(
+      login!.current!.value,
+      password!.current!.value,
+      group!.current!.value,
+      course!.current!.value,
+      name!.current!.value
+    ).then(value => {
+      if (value.result === "error") {
+        WrongInputs();
+        return;
+      }
+      if (value.data) {
+        callbackSetPage(PAGES.Login);
+      } else {
+        WrongInputs();
+      }
+    });
   };
   const checkValidInput = () => {
     const alphabet: string[] =

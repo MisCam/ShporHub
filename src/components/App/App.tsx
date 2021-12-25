@@ -2,6 +2,7 @@ import "./App.css";
 
 import { useState, useEffect, RefCallback } from "react";
 import { useSwipeable } from "react-swipeable";
+import Server from "../../classes/Server";
 
 import Header from "../Header";
 import WelcomePage from "../WelcomePage";
@@ -26,6 +27,8 @@ function App() {
   const [groups, setGroups] = useState([]);
   const [page, setPage] = useState("WelcomePage");
   const [isMenuOpen, setMenu] = useState(false);
+  const server = new Server();
+  
   const SwipeLeft = () => {
     setMenu(false);
   };
@@ -36,7 +39,6 @@ function App() {
     onSwipedLeft: SwipeLeft,
     onSwipedRight: SwipeRight,
   }) as { ref: RefCallback<Document> };
-
   const Login = (
     nickname: string,
     actualToken: string,
@@ -48,41 +50,9 @@ function App() {
     SetInfoInLocalStorage('1', nickname, actualToken, `${id}`, `${course_id}`, `${group_id}`);
     setPage(PAGES.MainPage);
     setLogged(true);
-    SetLessonsInState();
+    server.SetLessonsInState(setShporsByLesson, setLessons);
     setGroup(group_id);
     setCourse(course_id);
-  };
-  const GetLessonsResponce = async function () {
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getLessons&id=${localStorage.getItem(
-        "id"
-      )}&token=${localStorage.getItem("token")}`
-    );
-    const result = await answer.json();
-    return result.data;
-  };
-  const SetLessonsInState = () => {
-    GetLessonsResponce().then((value) => {
-      setShporsByLesson([]);
-      if (value) {
-        setLessons(value);
-        return;
-      }
-      setLessons([]);
-    });
-  };
-  const GroupsQuery = async function () {
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getGroups`
-    );
-    const result = await answer.json();
-    return result;
-  };
-  const GetGroups = async function () {
-    if (groups.length === 0) {
-      const response = await GroupsQuery();
-      setGroups(response.data);
-    }
   };
   const ChangePage = (page: string, logout: boolean = false) => {
     setPage(page);
@@ -90,38 +60,6 @@ function App() {
       SetInfoInLocalStorage('0', '', '', '', '', '');
       setLogged(false);
     }
-  };
-  const GetShporsByLesson = async function (discipline_id: string) {
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getShporsByLesson&discipline_id=${discipline_id}`
-    );
-    const result = await answer.json();
-    return result.data;
-  };
-  const SetShporsInState = (discipline_id: string) => {
-    GetShporsByLesson(discipline_id).then((value) => {
-      if (value) {
-        setShporsByLesson(value);
-        return;
-      }
-      setShporsByLesson([]);
-    });
-  };
-  const GetShporByIdResponse = async function (shpor_id: string) {
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=getShporsById&shpor_id=${shpor_id}`
-    );
-    const result = await answer.json();
-    return result.data;
-  };
-  const GetShporsById = (id: string) => {
-    GetShporByIdResponse(id).then((value) => {
-      if (value) {
-        setShporImages(value);
-        return;
-      }
-      setShporImages([]);
-    });
   };
   const SetInfoInLocalStorage = (
     logged: '1' | '0', 
@@ -145,9 +83,9 @@ function App() {
       setLogged(true);
       setGroup(parseInt(localStorage.getItem("group") || ''));
       setCourse(parseInt(localStorage.getItem("course") || ''));
-      SetLessonsInState();
+      server.SetLessonsInState(setShporsByLesson, setLessons);
     }
-    GetGroups();
+    server.GetGroups(groups, setGroups);
     ref(document);
   });
   return (
@@ -170,8 +108,8 @@ function App() {
           lessons={lessons}
           shporsByLesson={shporsByLesson}
           callbackSetPage={ChangePage}
-          setShporsInState={SetShporsInState}
-          setShporImages={GetShporsById}
+          setShporsInState={(id : string) => server.SetShporsInState(id, setShporsByLesson)}
+          setShporImages={(id : string) => server.GetShporsById(id, setShporImages)}
         />
       ) : page === PAGES.Shpor ? (
         <Shpor variants={shporImages} callbackSetPage={ChangePage} />
@@ -185,7 +123,7 @@ function App() {
           groups={groups}
           group={group}
           token={localStorage.getItem("token")}
-          changeLessons={SetLessonsInState}
+          changeLessons={() => server.SetLessonsInState(setShporsByLesson, setLessons)}
           course={course}
           setGroup={setGroup}
           setCourse={setCourse}
