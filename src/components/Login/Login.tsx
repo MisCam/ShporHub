@@ -4,6 +4,7 @@ import cn from "clsx";
 
 import Button from "../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../Button/Button";
+import Server from "../../classes/Server";
 
 import { PAGES } from "../App/pages";
 
@@ -33,21 +34,13 @@ const Login = (props: LoginProps): React.ReactElement => {
   const [isLoginValid, setLogin] = useState("");
   const [isPasswordValid, setPassword] = useState("");
 
-  const Response = async function () {
-    const md5 = require("md5");
-    const rand: number = Math.floor(Math.random() * 1000000);
-    const loginInput: string = login!.current!.value;
-    const passwordInput: string = password!.current!.value;
-    const hash: string = md5(md5(`${loginInput}${passwordInput}`) + rand);
-    const answer = await fetch(
-      `http://shporhub/api/index.php/?method=login&hash=${hash}&rand=${rand}&login=${loginInput}`
-    );
-    const result = await answer.json();
-    return result;
-  };
+  const server = new Server();
 
   const LoginFunc = () => {
-    Response().then((value) => {
+    server.LoginResponse(
+      login!.current!.value,
+      password!.current!.value,
+    ).then((value) => {
       if (value.result === "ok") {
         callbackLogin(
           login!.current!.value,
