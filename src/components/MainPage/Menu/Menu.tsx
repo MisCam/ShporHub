@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "../../Button";
 import { BUTTON_SIZE, BUTTON_COLOR } from "../../Button/Button";
 import cn from "clsx";
+import { PAGES } from "../../App/pages";
 
 import styles from "./Menu.module.css";
 
@@ -10,6 +11,7 @@ type MenuProps = {
   lessons: { name: string; id: string }[];
   callBackChangeSubject: (a: string) => void;
   setShporsInState: (a: string) => void;
+  callbackSetPage: (page: string, logout?: boolean) => void;
   isMenuOpen: boolean;
   setMenu: (a: boolean) => void;
 };
@@ -40,8 +42,15 @@ const Menu = (props: MenuProps): React.ReactElement => {
             {value.name}
           </Button>
         ))}
-        {/* <label>Остальное</label>
-        <Button>Опубликовать шпору</Button>
+        {/* <label className={styles.marginBottom}>Остальное</label>
+        <Button
+          classNames={styles.marginBottom}
+          color={BUTTON_COLOR.gray}
+          size={BUTTON_SIZE.normal}
+          callback={() => props.callbackSetPage(PAGES.UploadShpor)}
+        >
+          Опубликовать шпору
+        </Button>
         <Button>FAQ</Button> */}
       </div>
     </div>

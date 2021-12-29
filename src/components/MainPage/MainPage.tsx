@@ -57,6 +57,7 @@ const MainPage = (props: MainPageProps): React.ReactElement => {
           lessons={props.lessons}
           setShporsInState={setShporsInState}
           callBackChangeSubject={ChangeSubject}
+          callbackSetPage={callbackSetPage}
         />
       </PageLayout>
     </div>
