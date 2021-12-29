@@ -11,6 +11,7 @@ import Registration from "../Registration";
 import MainPage from "../MainPage";
 import Profile from "../Profile";
 import Shpor from "../Shpor";
+import AddShporPage from "../AddShporPage";
 
 import { PAGES } from "./pages";
 
@@ -114,7 +115,7 @@ function App() {
       ) : page === PAGES.Shpor ? (
         <Shpor variants={shporImages} callbackSetPage={ChangePage} />
       ) : page === PAGES.UploadShpor ? (
-        <div></div>
+        <AddShporPage callbackSetPage={ChangePage}/>
       ) : page === PAGES.FAQ ? (
         <div></div>
       ) : page === PAGES.Profile ? (
