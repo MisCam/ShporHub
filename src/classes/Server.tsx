@@ -129,7 +129,6 @@ export default class Server {
             setShporsByLesson([]);
         });
     };
-
     GetShporsById = (
         id: string,
         setShporImages: (a: []) => void
@@ -141,5 +140,38 @@ export default class Server {
             }
             setShporImages([]);
         });
+    };
+    UploadShpors = (
+        shporsData: 
+            {
+                id: number,
+                Question: any,
+                Answer: any
+            }[]
+        ,
+        time: string,
+        type: string,
+        description: string
+    ) => {
+        const data = new FormData();
+        for (let i = 0; i < shporsData.length; i++) {
+            data.append(`questions_${shporsData[i].id}`, 
+                (shporsData[i].Question) ? shporsData[i].Question : ""
+            );
+        }
+        for (let i = 0; i < shporsData.length; i++) {
+            data.append(`answers_${shporsData[i].id}`, 
+                (shporsData[i].Answer) ? shporsData[i].Answer : ""
+            );
+        }
+        fetch(
+            `http://shporhub/api/index.php/?method=uploadShpora&time=${time}
+                &type=${type}
+                &description=${description}`,
+            {
+              method: "POST",
+              body: data,
+            }
+          );
     };
 };

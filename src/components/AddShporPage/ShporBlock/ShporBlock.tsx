@@ -6,13 +6,14 @@ import styles from "./ShporBlock.module.css";
 
 type ShporBlockProps = {
     id: number;
-    shporData: { isQuestion: boolean, isAnswer: boolean };
-    changeShporInput: (id: number, isQuestion?: boolean) => void;
+    changeShporInput: (id: number, isQuestion: boolean, data: Blob) => void;
     addDataIn: () => void;
 };
 
 const ShporBlock = (props: ShporBlockProps): React.ReactElement => {
-    const { id, changeShporInput, shporData } = props;
+    const { id, changeShporInput } = props;
+    const [isQuestion, setQuestion] = useState(false);
+    const [isAnswer, setAnswer] = useState(false);
     return (
         <div>
             <div key={id} className={cn(styles.shporBlock)}>
@@ -21,14 +22,14 @@ const ShporBlock = (props: ShporBlockProps): React.ReactElement => {
                     type="file"
                     name="imageFile"
                     accept="images/*"
-                    id={styles.shporImagesAnswers}
-                    multiple
-                    onChange={() => {
-                        console.log('добавил вопрос в блок номер ' + id);
-                        changeShporInput(id, true);
+                    className={styles.hideInput}
+                    id={'shporImagesAnswers' + `${id + 1}`}
+                    onChange={(value) => {
+                        setQuestion(true);
+                        changeShporInput(id, true, value.target.files![0]);
                     }}
                 />
-                <label className={cn(styles.upload_files, shporData.isQuestion ? styles.uploaded : '')} htmlFor={styles.shporImagesAnswers}>
+                <label className={cn(styles.upload_files, isQuestion ? styles.uploaded : '')} htmlFor={'shporImagesAnswers' + `${id + 1}`}>
                     {`Загрузить фотографию вопроса`}
                 </label>
                 <label className={cn(styles.title, styles.marginTop)}>Загрузка ответа</label>
@@ -36,14 +37,14 @@ const ShporBlock = (props: ShporBlockProps): React.ReactElement => {
                     type="file"
                     name="imageFile"
                     accept="images/*"
-                    id={styles.shporImagesQuestions}
-                    multiple
-                    onChange={() => {
-                        console.log('добавил ответ в блок номер ' + id);
-                        changeShporInput(id, false);
+                    className={styles.hideInput}
+                    id={'shporImagesQuestions' + `${id + 1}`}
+                    onChange={(value) => {
+                        setAnswer(true);
+                        changeShporInput(id, false, value.target.files![0]);
                     }}
                 />
-                <label className={cn(styles.upload_files, shporData.isAnswer ? styles.uploaded : '')} htmlFor={styles.shporImagesQuestions}>
+                <label className={cn(styles.upload_files, isAnswer ? styles.uploaded : '')} htmlFor={'shporImagesQuestions' + `${id + 1}`}>
                     {`Загрузить фотографию ответа`}
                 </label>
             </div>

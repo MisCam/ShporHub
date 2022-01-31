@@ -42,7 +42,7 @@ const Menu = (props: MenuProps): React.ReactElement => {
             {value.name}
           </Button>
         ))}
-        {/* <label className={styles.marginBottom}>Остальное</label>
+        <label className={styles.marginBottom}>Остальное</label>
         <Button
           classNames={styles.marginBottom}
           color={BUTTON_COLOR.gray}
@@ -51,7 +51,7 @@ const Menu = (props: MenuProps): React.ReactElement => {
         >
           Опубликовать шпору
         </Button>
-        <Button>FAQ</Button> */}
+        {/* <Button>FAQ</Button> */}
       </div>
     </div>
   );

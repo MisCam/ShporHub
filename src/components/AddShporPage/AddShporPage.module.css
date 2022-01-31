@@ -8,6 +8,20 @@
   margin-top: 15px;
 }
 
+.input {
+  width: 60%;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid #00dab2;
+  box-shadow: 0 0 10px #00dab2;
+  padding: 0 20px;
+  outline: none;
+  color: #00dab2;
+  transition: 0.3s;
+}
+
 @media screen and (max-width: 670px) {
     .title {
       width: 90%;
