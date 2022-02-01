@@ -115,7 +115,10 @@ function App() {
       ) : page === PAGES.Shpor ? (
         <Shpor variants={shporImages} callbackSetPage={ChangePage} />
       ) : page === PAGES.UploadShpor ? (
-        <AddShporPage callbackSetPage={ChangePage}/>
+        <AddShporPage 
+          callbackSetPage={ChangePage}
+          groups={groups}
+        />
       ) : page === PAGES.FAQ ? (
         <div></div>
       ) : page === PAGES.Profile ? (

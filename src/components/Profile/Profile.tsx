@@ -29,7 +29,6 @@ const Profile = (props: ProfileProps): React.ReactElement => {
     nickname,
     course,
     group,
-    token,
     groups,
     setGroup,
     setCourse,

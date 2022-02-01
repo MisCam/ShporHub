@@ -151,7 +151,9 @@ export default class Server {
         ,
         time: string,
         type: string,
-        description: string
+        description: string,
+        course: string,
+        group: string
     ) => {
         const data = new FormData();
         for (let i = 0; i < shporsData.length; i++) {
@@ -167,7 +169,9 @@ export default class Server {
         fetch(
             `http://shporhub/api/index.php/?method=uploadShpora&time=${time}
                 &type=${type}
-                &description=${description}`,
+                &description=${description}
+                $course=${course}
+                &group=${group}`,
             {
               method: "POST",
               body: data,
